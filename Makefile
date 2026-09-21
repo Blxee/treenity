@@ -19,6 +19,11 @@ $(NAME): $(OBJ)
 %.o: %.c $(INCLUDE)
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
+norm:
+	@printf '\033[34m%s\033[0m\n' "checking with norminette.."
+	@norminette .
+	@printf '\033[34m%s\033[0m\n' "all good"
+
 re: fclean all
 
 clean:
