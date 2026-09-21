@@ -1,0 +1,19 @@
+[
+  {
+    "file": "src/main.c",
+    "arguments": [
+      "cc",
+      "-c",
+      "-o",
+      "src/main.o",
+      "src/main.c",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-pthread",
+      "-Iinclude"
+    ],
+    "directory": "/data/data/com.termux/files/home/c/treenity",
+    "output": "src/main.o"
+  }
+]

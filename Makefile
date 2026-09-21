@@ -1,9 +1,11 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
-LDFLAGS = -pthread
-NAME = treenity
 INCLUDE_DIR = include
 INCLUDE = $(wildcard $(INCLUDE_DIR)/*.h)
+
+CFLAGS = -Wall -Werror -Wextra -pthread -I$(INCLUDE_DIR)
+LDFLAGS = -pthread
+
+NAME = treenity
 SRC_DIR = src
 SRC = $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(SRC:.c=.o)
