@@ -40,7 +40,7 @@ clean:
 	@rm -f $(SERVER_OBJ) $(CLIENT_OBJ)
 
 fclean: clean
-	@printf '\033[33m%s\033[0m\n' "removing binary.."
+	@printf '\033[33m%s\033[0m\n' "removing binaries.."
 	@rm -f $(SERVER_NAME) $(CLIENT_NAME)
 
 .PHONY: clean
