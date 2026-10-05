@@ -5,15 +5,24 @@ INCLUDE = $(wildcard $(INCLUDE_DIR)/*.h)
 CFLAGS = -Wall -Werror -Wextra -pthread -I$(INCLUDE_DIR)
 LDFLAGS = -pthread
 
-NAME = treenity
-SRC_DIR = src
-SRC = $(wildcard $(SRC_DIR)/*.c)
-OBJ = $(SRC:.c=.o)
+SERVER_NAME = server
+SERVER_SRC_DIR = src/server
+SERVER_SRC = $(wildcard $(SERVER_SRC_DIR)/*.c)
+SERVER_OBJ = $(SERVER_SRC:.c=.o)
 
-all: $(NAME)
+CLIENT_NAME = client
+CLIENT_SRC_DIR = src/client
+CLIENT_SRC = $(wildcard $(CLIENT_SRC_DIR)/*.c)
+CLIENT_OBJ = $(CLIENT_SRC:.c=.o)
 
-$(NAME): $(OBJ)
-	@printf '\033[32m%s\033[0m\n' "compiling files.."
+all: $(SERVER_NAME) $(CLIENT_NAME)
+
+$(SERVER_NAME): $(SERVER_OBJ)
+	@printf '\033[32m%s\033[0m\n' "compiling server.."
+	@$(CC) -o $@ $^ $(LDFLAGS)
+
+$(CLIENT_NAME): $(CLIENT_OBJ)
+	@printf '\033[32m%s\033[0m\n' "compiling client.."
 	@$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c $(INCLUDE)
@@ -28,10 +37,10 @@ re: fclean all
 
 clean:
 	@printf '\033[33m%s\033[0m\n' "removing object files.."
-	@rm -f $(OBJ)
+	@rm -f $(SERVER_OBJ) $(CLIENT_OBJ)
 
 fclean: clean
 	@printf '\033[33m%s\033[0m\n' "removing binary.."
-	@rm -f $(NAME)
+	@rm -f $(SERVER_NAME) $(CLIENT_NAME)
 
 .PHONY: clean

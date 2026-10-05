@@ -1,3 +1,4 @@
-src/*.o
-treenity
+*.o
+server
+client
 .cache/
