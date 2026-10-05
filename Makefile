@@ -6,26 +6,33 @@ CFLAGS = -Wall -Werror -Wextra -pthread -I$(INCLUDE_DIR)
 LDFLAGS = -pthread
 
 SERVER_NAME = server
-SERVER_SRC_DIR = src/server
-SERVER_SRC = $(wildcard $(SERVER_SRC_DIR)/*.c)
-SERVER_OBJ = $(SERVER_SRC:.c=.o)
-
 CLIENT_NAME = client
+
+SERVER_SRC_DIR = src/server
 CLIENT_SRC_DIR = src/client
+COMMON_SRC_DIR = src/common
+OBJ_DIR = obj
+
+SERVER_SRC = $(wildcard $(SERVER_SRC_DIR)/*.c)
 CLIENT_SRC = $(wildcard $(CLIENT_SRC_DIR)/*.c)
-CLIENT_OBJ = $(CLIENT_SRC:.c=.o)
+COMMON_SRC = $(wildcard $(COMMON_SRC_DIR)/*.c)
+
+SERVER_OBJ = $(SERVER_SRC:src/%.c=$(OBJ_DIR)/%.o)
+CLIENT_OBJ = $(CLIENT_SRC:src/%.c=$(OBJ_DIR)/%.o)
+COMMON_OBJ = $(COMMON_SRC:src/%.c=$(OBJ_DIR)/%.o)
 
 all: $(SERVER_NAME) $(CLIENT_NAME)
 
-$(SERVER_NAME): $(SERVER_OBJ)
+$(SERVER_NAME): $(SERVER_OBJ) $(COMMON_OBJ)
 	@printf '\033[32m%s\033[0m\n' "compiling server.."
 	@$(CC) -o $@ $^ $(LDFLAGS)
 
-$(CLIENT_NAME): $(CLIENT_OBJ)
+$(CLIENT_NAME): $(CLIENT_OBJ) $(COMMON_OBJ)
 	@printf '\033[32m%s\033[0m\n' "compiling client.."
 	@$(CC) -o $@ $^ $(LDFLAGS)
 
-%.o: %.c $(INCLUDE)
+$(OBJ_DIR)/%.o: src/%.c $(INCLUDE)
+	@mkdir -p $(dir $@)
 	@$(CC) -c -o $@ $< $(CFLAGS)
 
 norm:
@@ -37,10 +44,10 @@ re: fclean all
 
 clean:
 	@printf '\033[33m%s\033[0m\n' "removing object files.."
-	@rm -f $(SERVER_OBJ) $(CLIENT_OBJ)
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@printf '\033[33m%s\033[0m\n' "removing binaries.."
 	@rm -f $(SERVER_NAME) $(CLIENT_NAME)
 
-.PHONY: clean
+.PHONY: all norm re clean fclean
