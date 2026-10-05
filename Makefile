@@ -24,30 +24,31 @@ COMMON_OBJ = $(COMMON_SRC:src/%.c=$(OBJ_DIR)/%.o)
 all: $(SERVER_NAME) $(CLIENT_NAME)
 
 $(SERVER_NAME): $(SERVER_OBJ) $(COMMON_OBJ)
-	@printf '\033[32m%s\033[0m\n' "compiling server.."
-	@$(CC) -o $@ $^ $(LDFLAGS)
+	printf '\033[32m%s\033[0m\n' "compiling server.."
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 $(CLIENT_NAME): $(CLIENT_OBJ) $(COMMON_OBJ)
-	@printf '\033[32m%s\033[0m\n' "compiling client.."
-	@$(CC) -o $@ $^ $(LDFLAGS)
+	printf '\033[32m%s\033[0m\n' "compiling client.."
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 $(OBJ_DIR)/%.o: src/%.c $(INCLUDE)
-	@mkdir -p $(dir $@)
-	@$(CC) -c -o $@ $< $(CFLAGS)
+	mkdir -p $(dir $@)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
 norm:
-	@printf '\033[34m%s\033[0m\n' "checking with norminette.."
-	@norminette .
-	@printf '\033[34m%s\033[0m\n' "all good"
+	printf '\033[34m%s\033[0m\n' "checking with norminette.."
+	norminette .
+	printf '\033[34m%s\033[0m\n' "all good"
 
 re: fclean all
 
 clean:
-	@printf '\033[33m%s\033[0m\n' "removing object files.."
-	@rm -rf $(OBJ_DIR)
+	printf '\033[33m%s\033[0m\n' "removing object files.."
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@printf '\033[33m%s\033[0m\n' "removing binaries.."
-	@rm -f $(SERVER_NAME) $(CLIENT_NAME)
+	printf '\033[33m%s\033[0m\n' "removing binaries.."
+	rm -f $(SERVER_NAME) $(CLIENT_NAME)
 
 .PHONY: all norm re clean fclean
+.SILENT:
