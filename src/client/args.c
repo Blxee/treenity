@@ -1,7 +1,7 @@
 #include <string.h>
 #include "client.h"
 
-void args_error_print(t_args_error err)
+int client_error_print(t_client_error err)
 {
   if (err == ARG_ERR_MISSING)
     dprintf(2, "[Error]: missing argument.\n");
@@ -9,6 +9,7 @@ void args_error_print(t_args_error err)
     dprintf(2, "[Error]: extra argument.\n");
   else if (err == ARG_ERR_UNKNOWN)
     dprintf(2, "[Error]: unkown argument.\n");
+  return err;
 }
 
 int args_parse_common(int argc, char** argv, t_args *args)

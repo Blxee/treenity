@@ -16,13 +16,13 @@ typedef struct s_args {
   t_command command;
 } t_args;
 
-typedef enum e_args_error {
+typedef enum e_client_error {
   ARG_ERR_MISSING = 1,
   ARG_ERR_EXTRA = 2,
   ARG_ERR_UNKNOWN = 3,
-} t_args_error;
+} t_client_error;
 
-#define USAGE "\
+# define CLIENT_USAGE "\
 Usage: client <ipc_identifier> <subcommand>\n\
     Subcommands:\n\
         create\n\
@@ -31,7 +31,7 @@ Usage: client <ipc_identifier> <subcommand>\n\
         subscribe\n\
         info\n"
 
-void args_error_print(t_args_error err);
+int client_error_print(t_client_error err);
 int args_parse_common(int argc, char** argv, t_args *args);
 
 void cmd_create(int argc, char** argv);

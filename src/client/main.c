@@ -9,8 +9,8 @@ int main(int argc, char** argv)
   err = args_parse_common(argc, argv, &args);
   if (err)
   {
-    args_error_print(err);
-    printf(USAGE);
+    client_error_print(err);
+    printf(CLIENT_USAGE);
     return err;
   }
   if (args.command == CMD_CREATE)
