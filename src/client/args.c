@@ -3,11 +3,11 @@
 
 int client_error_print(t_client_error err)
 {
-  if (err == ARG_ERR_MISSING)
+  if (err == CLIENT_ERR_MISSING_ARG)
     dprintf(2, "[Error]: missing argument.\n");
-  else if (err == ARG_ERR_EXTRA)
+  else if (err == CLIENT_ERR_EXTRA_ARG)
     dprintf(2, "[Error]: extra argument.\n");
-  else if (err == ARG_ERR_UNKNOWN)
+  else if (err == CLIENT_ERR_UNKNOWN_ARG)
     dprintf(2, "[Error]: unkown argument.\n");
   return err;
 }
@@ -15,7 +15,7 @@ int client_error_print(t_client_error err)
 int args_parse_common(int argc, char** argv, t_args *args)
 {
   if (argc < 3)
-    return ARG_ERR_MISSING;
+    return CLIENT_ERR_MISSING_ARG;
   args->ipc_identifier = argv[1];
   if (strcmp(argv[2], "create") == 0)
     args->command = CMD_CREATE;
@@ -28,7 +28,7 @@ int args_parse_common(int argc, char** argv, t_args *args)
   else if (strcmp(argv[2], "info") == 0)
     args->command = CMD_INFO;
   else
-    return ARG_ERR_UNKNOWN;
+    return CLIENT_ERR_UNKNOWN_ARG;
   return 0;
 }
 

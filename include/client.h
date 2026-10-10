@@ -17,9 +17,9 @@ typedef struct s_args {
 } t_args;
 
 typedef enum e_client_error {
-  ARG_ERR_MISSING = 1,
-  ARG_ERR_EXTRA,
-  ARG_ERR_UNKNOWN,
+  CLIENT_ERR_MISSING_ARG = 1,
+  CLIENT_ERR_EXTRA_ARG,
+  CLIENT_ERR_UNKNOWN_ARG,
 } t_client_error;
 
 # define CLIENT_USAGE "\
