@@ -38,14 +38,13 @@ t_server_error pipe_listen(t_pipe *pipe)
 {
   struct pollfd fds[1];
   char buffer[1024] = {0};
-  unsigned int bytes = 0;
 
   fds[0].fd = pipe->fd;
   fds[0].events = POLLIN;
   while (1)
   {
     poll(fds, 1, -1);
-    bytes = read(pipe->fd, &buffer, sizeof(buffer));
+    read(pipe->fd, &buffer, sizeof(buffer));
     printf("recieved: '%s'\n", buffer);
   }
   return 0;
