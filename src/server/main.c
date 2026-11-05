@@ -1,7 +1,6 @@
 #include "server.h"
 #include <fcntl.h>
 #include <stdio.h>
-#include <sys/poll.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -9,6 +8,7 @@
 #include <stdlib.h>
 #include <poll.h>
 
+static t_pipe globa_pipe;
 
 int server_error_print(t_server_error err)
 {
@@ -61,15 +61,19 @@ t_server_error pipe_destroy(t_pipe *pipe)
 
 void signal_handler(int signum)
 {
+  int err;
+  
   (void)signum;
-  printf("interrupted..\n");
+  printf("\ninterrupted by user..\n");
+  err = pipe_destroy(&globa_pipe);
+  if (err)
+    server_error_print(err);
   exit(0);
 }
 
 int main(int argc, char** argv)
 {
   int err;
-  t_pipe pipe;
   
   (void)argv;
   if (argc > 1)
@@ -80,13 +84,36 @@ int main(int argc, char** argv)
   }
   signal(SIGTERM, signal_handler);
   signal(SIGINT, signal_handler);
-  err = pipe_create(&pipe);
+  err = pipe_create(&globa_pipe);
   if (err)
     return server_error_print(err);
-  printf("%s\n", pipe.path);
-  pipe_listen(&pipe);
-  err = pipe_destroy(&pipe);
+  printf("%s\n", globa_pipe.path);
+  pipe_listen(&globa_pipe);
+  err = pipe_destroy(&globa_pipe);
   if (err)
     return server_error_print(err);
   return 0;
 }
+/*
+typedef struct _s_map_node {
+  int hash;
+  char value;
+} _t_map_node;
+
+typedef struct s_hashmap {
+  _t_map_node array;
+} t_hashmap;
+
+# define HASH_MAP_INIT_CAPACITY (1024)
+
+t_server_error map_create(t_hashmap *map)
+{
+  map
+  return 0;
+}
+
+int main()
+{
+  return 0;
+}
+*/

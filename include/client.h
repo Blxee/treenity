@@ -34,11 +34,13 @@ Usage: client <ipc_identifier> <subcommand>\n\
 int client_error_print(t_client_error err);
 int args_parse_common(int argc, char** argv, t_args *args);
 
-void cmd_create(int argc, char** argv);
-void cmd_list(int argc, char** argv);
-void cmd_produce(int argc, char** argv);
-void cmd_subscribe(int argc, char** argv);
-void cmd_info(int argc, char** argv);
+int fifo_open(char *path);
+
+int cmd_create(int argc, char** argv);
+int cmd_list(int argc, char** argv);
+int cmd_produce(int argc, char** argv);
+int cmd_subscribe(int argc, char** argv);
+int cmd_info(int argc, char** argv);
 
 #endif
 

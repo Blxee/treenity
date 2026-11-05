@@ -14,14 +14,19 @@ int main(int argc, char** argv)
     return err;
   }
   if (args.command == CMD_CREATE)
-    cmd_create(argc, argv);
+    err = cmd_create(argc, argv);
   else if (args.command == CMD_LIST)
-    cmd_list(argc, argv);
+    err = cmd_list(argc, argv);
   else if (args.command == CMD_PRODUCE)
-    cmd_produce(argc, argv);
+    err = cmd_produce(argc, argv);
   else if (args.command == CMD_SUBSCRIBE)
-    cmd_subscribe(argc, argv);
+    err = cmd_subscribe(argc, argv);
   else if (args.command == CMD_INFO)
-    cmd_info(argc, argv);
+    err = cmd_info(argc, argv);
+  if (err) {
+    client_error_print(err);
+    return (err);
+  }
+
   return 0;
 }
